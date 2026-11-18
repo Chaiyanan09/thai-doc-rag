@@ -1,0 +1,25 @@
+# สัปดาห์ 1: มีแค่ฐานข้อมูล PostgreSQL 18 + pgvector (สัปดาห์ 4 จะเพิ่ม backend และ model service)
+# รัน: docker compose up -d   (ต้องมีไฟล์ .env ที่มี DB_PASSWORD อยู่โฟลเดอร์เดียวกัน)
+services:
+  db:
+    image: pgvector/pgvector:pg18-trixie
+    container_name: thairag-db
+    environment:
+      POSTGRES_DB: thairag
+      POSTGRES_USER: rag_app
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env first}
+    ports:
+      # 5433 เพื่อไม่ชนกับ PostgreSQL 18 ที่ติดตั้งในเครื่องแล้ว (5432)
+      - "127.0.0.1:5433:5432"
+    volumes:
+      # PostgreSQL 18 image เก็บข้อมูลใต้ /var/lib/postgresql (ไม่ใช่ /var/lib/postgresql/data แบบเวอร์ชันเก่า)
+      - thairag-pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag_app -d thairag"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  thairag-pgdata:

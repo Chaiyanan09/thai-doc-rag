@@ -1,0 +1,12 @@
+# secrets
+.env
+.env.local
+
+# model cache (bge-m3 ~2.3 GB)
+hf-cache/
+
+# editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
