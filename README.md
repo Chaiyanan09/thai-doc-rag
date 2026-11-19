@@ -44,6 +44,10 @@ Next.js (3001) ──> Spring Boot (8081) ──> Python FastAPI (8001)   อ่
 2. อัปโหลด `sample-docs/sample-regulation-th.pdf` (หรือ PDF ภาษาไทยที่เป็นข้อความ ไม่ใช่สแกน)
 3. ไปที่หน้าแชท ถามคำถามจาก `sample-docs/test-questions.md` คำตอบควรมีเลขอ้างอิงที่ชี้ไปหน้าที่ถูก และข้อ "หอพัก" ต้องตอบว่าไม่พบ
 
+## วัดผล
+
+ชุดคำถาม 40 ข้อพร้อมตัวรันอัตโนมัติอยู่ใน `eval/` รันได้ด้วย `py eval\run_eval.py --label baseline` แล้วเทียบผลแต่ละรอบด้วย `eval\compare.py` รายละเอียดอยู่ใน `eval/README.md`
+
 ## ดูข้อมูลในฐานข้อมูล
 
 ```powershell

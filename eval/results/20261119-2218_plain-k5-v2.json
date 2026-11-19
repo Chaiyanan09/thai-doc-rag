@@ -1,0 +1,1159 @@
+{
+  "label": "plain-k5-v2",
+  "started_at": "2026-11-19T22:18:04",
+  "settings": {
+    "model": "typhoon-v2.5-30b-a3b-instruct",
+    "topK": 5,
+    "minScore": 0.35,
+    "sourceFormat": "plain",
+    "promptVersion": "v2"
+  },
+  "summary": {
+    "questions": 40,
+    "answerable": 35,
+    "unanswerable": 5,
+    "hit@1": 82.9,
+    "hit@3": 91.4,
+    "hit@5": 97.1,
+    "mrr": 0.871,
+    "correct": 82.5,
+    "answered": 100.0,
+    "facts_ok": 94.3,
+    "citation_hit": 82.9,
+    "citation_precision": 78.4,
+    "refused_correctly": 100.0,
+    "avg_llm_ms": 1256,
+    "errors": 0,
+    "correct_by_type": {
+      "colloquial": "11/13",
+      "condition": "1/4",
+      "direct": "14/16",
+      "table": "2/2",
+      "unanswerable": "5/5"
+    }
+  },
+  "rows": [
+    {
+      "id": "q01",
+      "type": "direct",
+      "question": "ภาคเรียนปกติลงทะเบียนได้สูงสุดกี่หน่วยกิต",
+      "pages": [
+        2
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาสามารถลงทะเบียนเรียนได้ไม่เกิน 22 หน่วยกิตในภาคการศึกษาปกติ [S1]",
+        "cited_pages": [
+          2
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          1,
+          2,
+          7,
+          6
+        ],
+        "retrieval_ms": 88,
+        "llm_ms": 3212,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q02",
+      "type": "colloquial",
+      "question": "ลงทะเบียนช้าโดนปรับเท่าไหร่",
+      "pages": [
+        2
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ลงทะเบียนเรียนหลังวันที่กำหนดต้องชำระค่าปรับการลงทะเบียนล่าช้าวันละ 100 บาท [S1]",
+        "cited_pages": [
+          2
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          7,
+          3,
+          5,
+          2
+        ],
+        "retrieval_ms": 108,
+        "llm_ms": 1302,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q03",
+      "type": "direct",
+      "question": "ถอนวิชาได้ถึงสัปดาห์ไหน",
+      "pages": [
+        2
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาสามารถถอนรายวิชาได้ภายในสัปดาห์ที่ 12 ของภาคการศึกษาปกติ [S1]",
+        "cited_pages": [
+          2
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          3,
+          5,
+          2,
+          5
+        ],
+        "retrieval_ms": 114,
+        "llm_ms": 1083,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q04",
+      "type": "direct",
+      "question": "ภาคฤดูร้อนเรียนกี่สัปดาห์",
+      "pages": [
+        1
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ภาคฤดูร้อนมีระยะเวลาเรียน 8 สัปดาห์ [S1]",
+        "cited_pages": [
+          1
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          1,
+          2,
+          2,
+          7,
+          1
+        ],
+        "retrieval_ms": 54,
+        "llm_ms": 853,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q05",
+      "type": "colloquial",
+      "question": "ถ้าป่วยหนักต้องหยุดเรียนหลายอาทิตย์ต้องทำยังไง",
+      "pages": [
+        3
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ป่วยหนักจนต้องพักรักษาตัวตั้งแต่สามสัปดาห์ขึ้นไป สามารถยื่นคำร้องขอลาพักการศึกษาได้ทันทีที่มีเหตุ พร้อมแนบใบรับรองแพทย์ [S1][S4]",
+        "cited_pages": [
+          3,
+          5
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          3,
+          1,
+          5,
+          2
+        ],
+        "retrieval_ms": 54,
+        "llm_ms": 1588,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q06",
+      "type": "direct",
+      "question": "ลาพักแล้วต้องจ่ายเงินไหม",
+      "pages": [
+        3
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ได้รับอนุมัติให้ลาพักการศึกษาต้องชำระค่ารักษาสภาพนักศึกษาภาคการศึกษาละ 1,000 บาท ภายในสองสัปดาห์แรกของภาคการศึกษานั้น [S1]",
+        "cited_pages": [
+          3
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          3,
+          7,
+          2,
+          5
+        ],
+        "retrieval_ms": 130,
+        "llm_ms": 1407,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q07",
+      "type": "direct",
+      "question": "ลาพักได้นานสุดเท่าไร",
+      "pages": [
+        3
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาสามารถลาพักการศึกษาได้ครั้งละไม่เกินหนึ่งภาคการศึกษาปกติ และรวมทั้งหมดตลอดหลักสูตรไม่เกินสองภาคการศึกษาปกติ เว้นแต่กรณีถูกเกณฑ์เข้ารับราชการทหาร ซึ่งสามารถลาได้เท่าระยะเวลาที่รับราชการ [S1]",
+        "cited_pages": [
+          3
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          3,
+          5,
+          1,
+          2
+        ],
+        "retrieval_ms": 51,
+        "llm_ms": 1657,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q08",
+      "type": "colloquial",
+      "question": "ขาดเรียนบ่อยจะมีสิทธิ์สอบไหม",
+      "pages": [
+        4
+      ],
+      "search_rank": 4,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่มีเวลาเรียนไม่น้อยกว่าร้อยละ 80 ของเวลาเรียนทั้งหมดของรายวิชา จึงจะมีสิทธิ์เข้าสอบปลายภาคในรายวิชานั้น [S4]",
+        "cited_pages": [
+          4
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          5,
+          6,
+          3,
+          4,
+          1
+        ],
+        "retrieval_ms": 115,
+        "llm_ms": 2617,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q09",
+      "type": "direct",
+      "question": "ได้ I แล้วไม่แก้จะเป็นยังไง",
+      "pages": [
+        4
+      ],
+      "search_rank": 4,
+      "chat": {
+        "found": true,
+        "answer": "หากนักศึกษาได้สัญลักษณ์ I แล้วไม่ดำเนินการให้เสร็จภายในสองสัปดาห์แรกของภาคการศึกษาปกติถัดไป สัญลักษณ์ I จะเปลี่ยนเป็นระดับคะแนน F โดยอัตโนมัติ [S4]",
+        "cited_pages": [
+          4
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          5,
+          2,
+          4,
+          3
+        ],
+        "retrieval_ms": 63,
+        "llm_ms": 1556,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q10",
+      "type": "table",
+      "question": "เกรด C+ คิดเป็นกี่แต้ม",
+      "pages": [
+        4
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "เกรด C+ คิดเป็น 2.5 แต้ม [S1]",
+        "cited_pages": [
+          4
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          4,
+          6,
+          5,
+          1,
+          2
+        ],
+        "retrieval_ms": 62,
+        "llm_ms": 789,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q11",
+      "type": "colloquial",
+      "question": "เกรดเฉลี่ยเท่าไหร่ถึงโดนรีไทร์",
+      "pages": [
+        5
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาจะพ้นสภาพนักศึกษาหากได้ค่าระดับคะแนนเฉลี่ยสะสมต่ำกว่า 1.50 เมื่อสิ้นภาคการศึกษาปกติที่สองนับตั้งแต่เข้าศึกษา [S1] และหากได้ค่าระดับคะแนนเฉลี่ยสะสมต่ำกว่า 1.75 สองภาคการศึกษาปกติติดต่อกัน นับตั้งแต่ภาคการศึกษาปกติที่สามเป็นต้นไป [S1]",
+        "cited_pages": [
+          5
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          5,
+          6,
+          4,
+          1,
+          3
+        ],
+        "retrieval_ms": 117,
+        "llm_ms": 2026,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q12",
+      "type": "colloquial",
+      "question": "ลอกข้อสอบโดนอะไร",
+      "pages": [
+        5
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ลอกข้อสอบหรือทุจริตในการสอบจะได้รับระดับคะแนน F ในทุกรายวิชาที่ลงทะเบียนในภาคการศึกษานั้น และต้องพักการศึกษาในภาคการศึกษาปกติถัดไปหนึ่งภาค [S3][S2] หากเป็นการทุจริตซ้ำหรือร้ายแรง เช่น ให้ผู้อื่นเข้าสอบแทน จะได้รับการพ้นสภาพนักศึกษา [S3][S2]",
+        "cited_pages": [
+          4,
+          1
+        ],
+        "cited_correct": 0,
+        "sent_pages": [
+          5,
+          4,
+          1,
+          3,
+          6
+        ],
+        "retrieval_ms": 52,
+        "llm_ms": 1947,
+        "facts_ok": true,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "q13",
+      "type": "direct",
+      "question": "หลักสูตร 4 ปี เรียนได้นานสุดกี่ปี",
+      "pages": [
+        5
+      ],
+      "search_rank": null,
+      "chat": {
+        "found": true,
+        "answer": "หลักสูตรปริญญาตรีสี่ปีมีระยะเวลาปกติ 4 ปี แต่ระเบียบไม่ได้ระบุจำนวนปีสูงสุดที่สามารถเรียนได้เกินระยะเวลาปกตินี้ [S1] ส่วนที่เหลือไม่มีในเอกสาร",
+        "cited_pages": [
+          1
+        ],
+        "cited_correct": 0,
+        "sent_pages": [
+          1,
+          1,
+          4,
+          2,
+          6
+        ],
+        "retrieval_ms": 50,
+        "llm_ms": 1341,
+        "facts_ok": false,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "q14",
+      "type": "colloquial",
+      "question": "โดนรีไทร์แล้วกลับมาเรียนได้ไหม",
+      "pages": [
+        5
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่พ้นสภาพสามารถยื่นคำร้องขอกลับเข้าศึกษาใหม่ได้หนึ่งครั้ง ภายในหนึ่งปีนับจากวันที่พ้นสภาพ โดยต้องได้รับอนุมัติจากคณบดี [S1]",
+        "cited_pages": [
+          5
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          5,
+          3,
+          2,
+          3,
+          1
+        ],
+        "retrieval_ms": 127,
+        "llm_ms": 1365,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q15",
+      "type": "direct",
+      "question": "เกียรตินิยมอันดับหนึ่งต้องได้เกรดเฉลี่ยเท่าไร",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ได้รับเกียรตินิยมอันดับหนึ่งต้องมีค่าระดับคะแนนเฉลี่ยสะสมไม่ต่ำกว่า 3.60 [S1]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          5,
+          1,
+          4,
+          1
+        ],
+        "retrieval_ms": 51,
+        "llm_ms": 1570,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q16",
+      "type": "condition",
+      "question": "เคยติด F ยังได้เกียรตินิยมอันดับสองไหม",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่เคยได้ระดับคะแนน F ไม่มีสิทธิ์ได้รับปริญญาเกียรตินิยมอันดับสอง",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          6,
+          5,
+          4,
+          1,
+          5
+        ],
+        "retrieval_ms": 124,
+        "llm_ms": 1155,
+        "facts_ok": true,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "q17",
+      "type": "direct",
+      "question": "ต้องยื่นขอจบการศึกษาเมื่อไร",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ต้องยื่นคำร้องขอสำเร็จการศึกษาภายในสัปดาห์ที่ 8 ของภาคการศึกษาสุดท้าย [S1]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          1,
+          5,
+          3,
+          5
+        ],
+        "retrieval_ms": 113,
+        "llm_ms": 1006,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q18",
+      "type": "colloquial",
+      "question": "ค่าเทอมเท่าไหร่",
+      "pages": [
+        7
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ค่าธรรมเนียมการศึกษาแบบเหมาจ่ายสำหรับภาคการศึกษาปกติคือ 18,000 บาท ต่อภาค และภาคฤดูร้อนคือ 6,000 บาท ต่อภาค [S1]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          7,
+          2,
+          3,
+          1,
+          1
+        ],
+        "retrieval_ms": 83,
+        "llm_ms": 1473,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q19",
+      "type": "condition",
+      "question": "ลาออกตอนสัปดาห์แรกได้เงินคืนไหม",
+      "pages": [
+        7
+      ],
+      "search_rank": 3,
+      "chat": {
+        "found": true,
+        "answer": "ได้รับคืนเต็มจำนวน หากยื่นคำร้องก่อนวันเปิดภาคการศึกษา [S3]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          2,
+          7,
+          3,
+          5
+        ],
+        "retrieval_ms": 108,
+        "llm_ms": 889,
+        "facts_ok": false,
+        "citation_hit": true,
+        "correct": false
+      }
+    },
+    {
+      "id": "q20",
+      "type": "direct",
+      "question": "บัตรนักศึกษาหายทำใหม่กี่บาท",
+      "pages": [
+        7
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ค่าทำบัตรนักศึกษาใหม่กรณีบัตรหาย ใบละ 200 บาท [S1]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          7,
+          3,
+          2,
+          5,
+          5
+        ],
+        "retrieval_ms": 107,
+        "llm_ms": 1180,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q21",
+      "type": "direct",
+      "question": "หลักสูตรสี่ปีต้องเรียนกี่หน่วยกิต",
+      "pages": [
+        1
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "หลักสูตรปริญญาตรีสี่ปีต้องมีจำนวนหน่วยกิตรวมไม่น้อยกว่า 120 หน่วยกิต [S1]",
+        "cited_pages": [
+          1
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          1,
+          1,
+          2,
+          4,
+          6
+        ],
+        "retrieval_ms": 89,
+        "llm_ms": 1077,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q22",
+      "type": "direct",
+      "question": "ใครมีอำนาจตีความระเบียบนี้",
+      "pages": [
+        1
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "อธิการบดีมีอำนาจตีความระเบียบนี้ และเป็นผู้วินิจฉัยชี้ขาดในกรณีที่มีปัญหาในการตีความ",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          1,
+          1,
+          2,
+          4,
+          5
+        ],
+        "retrieval_ms": 56,
+        "llm_ms": 1154,
+        "facts_ok": true,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "q23",
+      "type": "direct",
+      "question": "ลงทะเบียนเรียนต้องให้ใครเห็นชอบ",
+      "pages": [
+        2
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ต้องได้รับความเห็นชอบจากอาจารย์ที่ปรึกษาก่อนทุกครั้ง [S1]",
+        "cited_pages": [
+          2
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          1,
+          1,
+          2,
+          5
+        ],
+        "retrieval_ms": 112,
+        "llm_ms": 926,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q24",
+      "type": "colloquial",
+      "question": "อยากเข้าฟังวิชาโดยไม่เอาหน่วยกิตได้ไหม",
+      "pages": [
+        2
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "สามารถเข้าฟังวิชาโดยไม่เอาหน่วยกิตได้ โดยลงทะเบียนแบบร่วมฟัง (Audit) ได้ ภายใต้ความเห็นชอบของอาจารย์ผู้สอน และจะได้รับสัญลักษณ์ V เมื่อมีเวลาเรียนครบตามเกณฑ์ [S1]",
+        "cited_pages": [
+          2
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          2,
+          1,
+          6,
+          1
+        ],
+        "retrieval_ms": 109,
+        "llm_ms": 1396,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q25",
+      "type": "condition",
+      "question": "ไปเป็นทหารลาพักได้นานแค่ไหน",
+      "pages": [
+        3
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ถูกเกณฑ์เข้ารับราชการทหารสามารถลาพักการศึกษาได้เท่าระยะเวลาที่รับราชการ [S1]",
+        "cited_pages": [
+          3
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          3,
+          5,
+          1,
+          1
+        ],
+        "retrieval_ms": 57,
+        "llm_ms": 998,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q26",
+      "type": "direct",
+      "question": "ช่วงที่ลาพักนับรวมในระยะเวลาเรียนไหม",
+      "pages": [
+        3
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ช่วงที่ลาพักการศึกษาจะนับรวมอยู่ในระยะเวลาการศึกษา เว้นแต่กรณีถูกเกณฑ์เข้ารับราชการทหาร [S2]",
+        "cited_pages": [
+          3
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          3,
+          2,
+          5,
+          1
+        ],
+        "retrieval_ms": 53,
+        "llm_ms": 1043,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q27",
+      "type": "direct",
+      "question": "เกรดเฉลี่ยคิดทศนิยมกี่ตำแหน่ง",
+      "pages": [
+        4
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "การคำนวณค่าระดับคะแนนเฉลี่ยให้คิดทศนิยมสองตำแหน่งโดยไม่ปัดเศษ [S1]",
+        "cited_pages": [
+          4
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          4,
+          6,
+          5,
+          1,
+          1
+        ],
+        "retrieval_ms": 124,
+        "llm_ms": 928,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q28",
+      "type": "table",
+      "question": "เกรด B+ มีความหมายว่าอะไร",
+      "pages": [
+        4
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "เกรด B+ หมายถึง \"ดีมาก\" [S1]",
+        "cited_pages": [
+          4
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          4,
+          6,
+          5,
+          1,
+          1
+        ],
+        "retrieval_ms": 119,
+        "llm_ms": 781,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q29",
+      "type": "colloquial",
+      "question": "ถ้าเทอมนี้ไม่ลงทะเบียนเรียนเลยจะเป็นอะไรไหม",
+      "pages": [
+        5
+      ],
+      "search_rank": 3,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่ไม่ลงทะเบียนเรียนภายในสองสัปดาห์แรกของภาคการศึกษาปกติ และไม่ได้รับอนุมัติให้ลาพักการศึกษา จะพ้นสภาพนักศึกษา [S3]",
+        "cited_pages": [
+          5
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          2,
+          5,
+          7,
+          3
+        ],
+        "retrieval_ms": 58,
+        "llm_ms": 1328,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q30",
+      "type": "colloquial",
+      "question": "ให้เพื่อนเข้าสอบแทนจะโดนอะไร",
+      "pages": [
+        5
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "หากนักศึกษาให้ผู้อื่นเข้าสอบแทน จะถือว่าเป็นการทุจริตอย่างร้ายแรง ซึ่งทำให้พ้นสภาพนักศึกษาทันที [S3][S1]",
+        "cited_pages": [
+          5,
+          4
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          5,
+          1,
+          4,
+          6,
+          3
+        ],
+        "retrieval_ms": 111,
+        "llm_ms": 1196,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q31",
+      "type": "direct",
+      "question": "จะจบการศึกษาต้องได้เกรดเฉลี่ยอย่างน้อยเท่าไร",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาจะสำเร็จการศึกษาต้องได้ค่าระดับคะแนนเฉลี่ยสะสมไม่ต่ำกว่า 2.00 [S1]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          5,
+          4,
+          1,
+          1
+        ],
+        "retrieval_ms": 76,
+        "llm_ms": 1032,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q32",
+      "type": "condition",
+      "question": "เคยทุจริตในการสอบยังได้เกียรตินิยมไหม",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่เคยถูกลงโทษฐานทุจริตในการสอบ ไม่มีสิทธิ์ได้รับปริญญาเกียรตินิยม [S2][S3]",
+        "cited_pages": [
+          5,
+          1
+        ],
+        "cited_correct": 0,
+        "sent_pages": [
+          6,
+          5,
+          1,
+          1,
+          4
+        ],
+        "retrieval_ms": 50,
+        "llm_ms": 1137,
+        "facts_ok": true,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "q33",
+      "type": "colloquial",
+      "question": "ค่าเทอมภาคฤดูร้อนเท่าไหร่",
+      "pages": [
+        7
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ค่าธรรมเนียมการศึกษาสำหรับภาคฤดูร้อนคือ 6,000 บาทต่อภาคการศึกษา [S1]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          7,
+          2,
+          3,
+          1,
+          1
+        ],
+        "retrieval_ms": 116,
+        "llm_ms": 1046,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q34",
+      "type": "colloquial",
+      "question": "ขอใบเกรดภาษาอังกฤษเสียเงินเท่าไร",
+      "pages": [
+        7
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ค่าออกใบแสดงผลการเรียนฉบับภาษาอังกฤษ ฉบับละ 50 บาท [S2]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 0,
+        "sent_pages": [
+          7,
+          6,
+          2,
+          1,
+          3
+        ],
+        "retrieval_ms": 52,
+        "llm_ms": 909,
+        "facts_ok": true,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "q35",
+      "type": "colloquial",
+      "question": "ไม่มีเงินจ่ายค่าเทอม ทำอะไรได้บ้าง",
+      "pages": [
+        7
+      ],
+      "search_rank": 3,
+      "chat": {
+        "found": true,
+        "answer": "นักศึกษาที่มีปัญหาด้านค่าใช้จ่ายสามารถยื่นคำร้องขอผ่อนผันการชำระค่าธรรมเนียมได้ ภาคการศึกษาละไม่เกินหนึ่งครั้ง ที่กองกิจการนักศึกษา [S3]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          3,
+          7,
+          5,
+          2
+        ],
+        "retrieval_ms": 56,
+        "llm_ms": 1542,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "q36",
+      "type": "unanswerable",
+      "question": "มหาวิทยาลัยมีหอพักให้ไหม",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          1,
+          3,
+          3,
+          1,
+          5
+        ],
+        "retrieval_ms": 123,
+        "llm_ms": 698,
+        "correct": true
+      }
+    },
+    {
+      "id": "q37",
+      "type": "unanswerable",
+      "question": "มีที่จอดรถให้นักศึกษาไหม",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          3,
+          3,
+          5,
+          1,
+          2
+        ],
+        "retrieval_ms": 103,
+        "llm_ms": 712,
+        "correct": true
+      }
+    },
+    {
+      "id": "q38",
+      "type": "unanswerable",
+      "question": "เรียนออนไลน์ทั้งเทอมได้ไหม",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          1,
+          2,
+          2,
+          5,
+          3
+        ],
+        "retrieval_ms": 68,
+        "llm_ms": 744,
+        "correct": true
+      }
+    },
+    {
+      "id": "q39",
+      "type": "unanswerable",
+      "question": "ต้องแต่งชุดนักศึกษามาสอบไหม",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          1,
+          5,
+          3,
+          6,
+          4
+        ],
+        "retrieval_ms": 46,
+        "llm_ms": 916,
+        "correct": true
+      }
+    },
+    {
+      "id": "q40",
+      "type": "unanswerable",
+      "question": "อธิการบดีชื่ออะไร",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          1,
+          1
+        ],
+        "retrieval_ms": 61,
+        "llm_ms": 661,
+        "correct": true
+      }
+    }
+  ]
+}
