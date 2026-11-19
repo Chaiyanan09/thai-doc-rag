@@ -17,8 +17,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -45,7 +49,8 @@ public class DocumentService {
     }
 
     /**
-     * อัปโหลด PDF: บันทึกสถานะ PROCESSING -> ให้ Python อ่านและตัด chunk -> สร้าง embedding
+     * อัปโหลด PDF: ถ้าเคยอัปโหลดไฟล์เดียวกัน (SHA-256 ตรงกัน) และพร้อมใช้แล้ว ส่งเอกสารเดิมกลับทันที
+     * ไม่อย่างนั้น บันทึกสถานะ PROCESSING -> ให้ Python อ่านและตัด chunk -> สร้าง embedding
      * -> บันทึก chunk ทั้งหมดและเปลี่ยนเป็น READY ใน transaction เดียว
      *
      * ไม่ครอบทั้งเมธอดด้วย @Transactional เพราะการเรียก model service ใช้เวลานาน
@@ -57,8 +62,16 @@ public class DocumentService {
             throw new IllegalArgumentException("ไฟล์นี้ไม่ใช่ PDF");
         }
         String filename = file.getOriginalFilename() == null ? "document.pdf" : file.getOriginalFilename();
+        String hash = sha256(pdf);
 
-        Document doc = documents.save(new Document(filename));
+        Optional<Document> existing = documents.findFirstByContentHashAndStatusOrderByCreatedAtDesc(
+                hash, DocumentStatus.READY);
+        if (existing.isPresent()) {
+            log.info("Document {} reused for {} (same file already uploaded)", existing.get().getId(), filename);
+            return DocumentResponse.from(existing.get());
+        }
+
+        Document doc = documents.save(new Document(filename, hash));
         try {
             IngestResult ingested = modelService.ingest(pdf);
             if (ingested.chunks() == null || ingested.chunks().isEmpty()) {
@@ -110,6 +123,14 @@ public class DocumentService {
             vectors.addAll(modelService.embed(texts));
         }
         return vectors;
+    }
+
+    static String sha256(byte[] bytes) {
+        try {
+            return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("SHA-256 is not available", e);
+        }
     }
 
     /** ไฟล์ PDF ต้องมี "%PDF-" อยู่ใน 1024 ไบต์แรก */

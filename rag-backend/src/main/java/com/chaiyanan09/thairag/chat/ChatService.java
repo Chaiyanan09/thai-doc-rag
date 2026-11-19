@@ -10,14 +10,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * RAG: ค้น chunk ที่เกี่ยวข้อง -> ส่งให้ LLM พร้อมกติกา -> ได้คำตอบที่มีเลขอ้างอิง
  *
  * ขั้นตอน
  * 1. แปลงคำถามเป็น vector (Python /embed) แล้วค้น top-k chunk ด้วย pgvector
+ *    (ถ้าแชทมีไฟล์แนบ ค้นเฉพาะไฟล์เหล่านั้น ถ้าไม่มีค้นทุกเอกสาร)
  * 2. ตัด chunk ที่คะแนนต่ำกว่า min-score ทิ้ง ถ้าไม่เหลือเลยตอบ "ไม่พบ" ทันทีโดยไม่เรียก LLM
  * 3. ส่ง chunk พร้อมรหัส [S1]..[Sk] ให้ Typhoon ผ่าน Spring AI ChatClient
  * 4. อ่านรหัสอ้างอิงจากคำตอบ จัดให้อยู่รูปแบบ [S1] แล้วบอกหน้าเว็บว่าชิ้นไหนถูกอ้างถึง
@@ -27,7 +32,9 @@ public class ChatService {
 
     private static final Logger log = LoggerFactory.getLogger(ChatService.class);
     private static final int MAX_QUESTION_LENGTH = 1000;
-    static final String NO_DOCUMENTS = "ยังไม่มีเอกสารในระบบ กรุณาอัปโหลดเอกสารก่อน";
+    private static final int MAX_DOCUMENTS = 20;
+    static final String NO_DOCUMENTS = "ยังไม่มีเอกสารในระบบ กดปุ่ม + เพื่อแนบไฟล์ PDF ก่อน";
+    static final String NO_ATTACHED_DOCUMENTS = "ไม่พบไฟล์ที่แนบในระบบ (อาจถูกลบไปแล้ว) ลองแนบไฟล์ใหม่หรือเริ่มแชทใหม่";
 
     private final ChatClient chatClient;
     private final ChunkRepository chunks;
@@ -66,7 +73,19 @@ public class ChatService {
                 PromptBuilder.PROMPT_VERSION, verifyCitations);
     }
 
+    /** ค้นจากทุกเอกสารในระบบ (eval ใช้แบบนี้) */
     public ChatReply ask(String rawQuestion) {
+        return ask(rawQuestion, List.of());
+    }
+
+    /** ถ้ามี documentIds จะค้นเฉพาะในไฟล์เหล่านั้น เหมือนแนบไฟล์ให้ AI อ่านเฉพาะในแชทนี้ */
+    public ChatReply ask(String rawQuestion, List<UUID> documentIds) {
+        Set<UUID> scope = documentIds == null ? Set.of() : documentIds.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        if (scope.size() > MAX_DOCUMENTS) {
+            throw new IllegalArgumentException("แนบไฟล์ได้ไม่เกิน " + MAX_DOCUMENTS + " ไฟล์ต่อแชท");
+        }
         String question = rawQuestion == null ? "" : rawQuestion.strip();
         if (question.isEmpty()) {
             throw new IllegalArgumentException("กรุณาพิมพ์คำถาม");
@@ -77,12 +96,13 @@ public class ChatService {
 
         long start = System.nanoTime();
         float[] queryVector = modelService.embed(List.of(question)).get(0);
-        List<SearchHit> hits = chunks.search(queryVector, topK);
+        List<SearchHit> hits = chunks.search(queryVector, topK, scope);
         List<SearchHit> relevant = hits.stream().filter(h -> h.score() >= minScore).toList();
         long retrievalMs = millisSince(start);
 
         if (relevant.isEmpty()) {
-            String answer = hits.isEmpty() ? NO_DOCUMENTS : PromptBuilder.NOT_FOUND;
+            String answer = !hits.isEmpty() ? PromptBuilder.NOT_FOUND
+                    : scope.isEmpty() ? NO_DOCUMENTS : NO_ATTACHED_DOCUMENTS;
             return save(new ChatReply(question, answer, false, List.of(), model, retrievalMs, 0, 0));
         }
 
@@ -116,8 +136,9 @@ public class ChatService {
             sources.add(new ChatReply.Source(i + 1, hit.chunkId(), hit.documentId(), hit.filename(),
                     hit.page(), hit.content(), hit.score(), cited.contains(i + 1)));
         }
-        log.info("chat: {} chunks, cited {}, found={}, fixes={}, retrieval {} ms, llm {} ms, answer: {}",
-                relevant.size(), cited, found, citationFixes, retrievalMs, llmMs, abbreviate(rawAnswer));
+        log.info("chat: scope {}, {} chunks, cited {}, found={}, fixes={}, retrieval {} ms, llm {} ms, answer: {}",
+                scope.isEmpty() ? "all" : scope.size() + " files", relevant.size(), cited, found, citationFixes,
+                retrievalMs, llmMs, abbreviate(rawAnswer));
         return save(new ChatReply(question, answer, found, sources, model, retrievalMs, llmMs, citationFixes));
     }
 

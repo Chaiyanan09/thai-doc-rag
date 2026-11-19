@@ -16,10 +16,13 @@ public class ChatController {
         this.service = service;
     }
 
-    /** ตัวอย่าง body: {"question": "ลาพักการศึกษาต้องทำอย่างไร"} */
+    /**
+     * ตัวอย่าง body: {"question": "ลาพักการศึกษาต้องทำอย่างไร"}
+     * จำกัดให้ค้นเฉพาะไฟล์ที่แนบ: {"question": "...", "documentIds": ["<uuid>", ...]}
+     */
     @PostMapping
     public ChatReply ask(@RequestBody ChatRequest request) {
-        return service.ask(request.question());
+        return service.ask(request.question(), request.documentIds());
     }
 
     /** ค่าตั้งค่าของการตอบที่ใช้อยู่ (eval/run_eval.py เรียกเพื่อบันทึกว่ารอบนี้ทดลองด้วยค่าอะไร) */

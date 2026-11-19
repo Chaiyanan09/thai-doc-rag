@@ -5,13 +5,13 @@ Backend หลักของระบบ (Spring Boot 4.1 + Java 21 + Spring AI
 | Endpoint | ทำอะไร |
 |---|---|
 | `GET /api/health` | สถานะของ backend, ฐานข้อมูล และ model service |
-| `POST /api/documents` | อัปโหลด PDF (form field `file`) แล้วรอจนประมวลผลเสร็จ |
+| `POST /api/documents` | อัปโหลด PDF (form field `file`) แล้วรอจนประมวลผลเสร็จ ถ้าเคยอัปโหลดไฟล์เดียวกัน (SHA-256 ตรงกัน) ส่งเอกสารเดิมกลับทันที |
 | `GET /api/documents` | รายการเอกสารทั้งหมด (ใหม่สุดก่อน) |
 | `GET /api/documents/{id}` | ข้อมูลเอกสาร 1 ไฟล์ |
 | `DELETE /api/documents/{id}` | ลบเอกสาร (chunk ถูกลบตามด้วย ON DELETE CASCADE) |
 | `GET /api/search?q=...&limit=5` | ค้น chunk ที่ความหมายใกล้คำถามที่สุด |
 | `GET /api/chat/settings` | ค่าที่ใช้ตอบอยู่ (model, top-k, min-score, รูปแบบการส่ง chunk) ให้ eval บันทึกคู่กับผล |
-| `POST /api/chat` | body `{"question": "..."}` ได้คำตอบที่มีรหัสอ้างอิง `[S1]` พร้อม chunk ที่ใช้ (`sources`) และ `found=false` ถ้าเอกสารไม่มีคำตอบ |
+| `POST /api/chat` | body `{"question": "..."}` ได้คำตอบที่มีรหัสอ้างอิง `[S1]` พร้อม chunk ที่ใช้ (`sources`) และ `found=false` ถ้าเอกสารไม่มีคำตอบ เพิ่ม `"documentIds": ["<uuid>", ...]` (ไม่เกิน 20) เพื่อค้นเฉพาะไฟล์ที่แนบในแชท ถ้าไม่ส่งค้นทุกเอกสาร |
 
 ทุก error ตอบเป็น `{"message": "..."}`
 
@@ -35,7 +35,7 @@ Backend หลักของระบบ (Spring Boot 4.1 + Java 21 + Spring AI
 .\mvnw.cmd spring-boot:run
 ```
 
-Flyway จะสร้างตารางให้เอง: `documents`, `chunks` (`V1__init_schema.sql`) และ `chat_logs` (`V2__chat_logs.sql`)
+Flyway จะสร้างตารางให้เอง: `documents`, `chunks` (`V1__init_schema.sql`), `chat_logs` (`V2__chat_logs.sql`) และคอลัมน์ `documents.content_hash` (`V3__document_hash.sql`)
 
 ลองเรียก:
 
@@ -78,6 +78,8 @@ config/    CORS ให้หน้าเว็บพอร์ต 3001 เรี�
 - `documents` ใช้ JPA เหมือน ToothSeg ส่วน `chunks` ใช้ SQL ตรงๆ เพราะต้องใช้ type `vector` และ operator `<=>` ของ pgvector
 - `DocumentService.upload` ไม่ใส่ `@Transactional` ทั้งเมธอด เพราะการรอ Python อาจนานหลายนาที ไม่ควรถือ connection ฐานข้อมูลค้างไว้ จึงเปิด transaction แค่ตอนบันทึก chunk ทั้งหมดพร้อมเปลี่ยนสถานะเป็น READY
 - ถ้ามีขั้นไหนล้ม เอกสารจะถูกบันทึกเป็น `FAILED` พร้อมข้อความ error ไม่หายเงียบ
+- เก็บ SHA-256 ของไฟล์ไว้ใน `content_hash` ผู้ใช้แนบไฟล์เดิมซ้ำในแชทใหม่ได้ทันที ไม่ต้องอ่านและสร้าง embedding ใหม่ และไม่เกิด chunk ซ้ำที่ทำให้ผลค้นหาเพี้ยน
+- ค้นเฉพาะไฟล์ที่แนบ (`ChunkRepository.search(..., documentIds)`) ดึง chunk ของไฟล์เหล่านั้นด้วย CTE แบบ `MATERIALIZED` ก่อนแล้วเรียงระยะแบบตรงตัว เพราะถ้าใช้ HNSW index แล้วค่อยกรอง เอกสารเล็กๆ อาจโดนกรองจนเหลือไม่ถึง k ชิ้น (เอกสารหนึ่งมีไม่กี่ร้อยชิ้น เรียงตรงตัวยังเร็ว)
 - Typhoon มี API แบบเดียวกับ OpenAI จึงใช้ `spring-ai-starter-model-openai` แล้วเปลี่ยนแค่ `base-url` กับ `model` ใน `application.properties` จะเปลี่ยนไปใช้ LLM เจ้าอื่นก็แก้แค่ 3 ค่านี้
 - กันการแต่งคำตอบ 3 ชั้น
   1. ตัด chunk ที่คะแนนต่ำกว่า `app.chat.min-score` ถ้าไม่เหลือเลยตอบ "ไม่พบข้อมูลนี้ในเอกสาร" โดยไม่เรียก LLM

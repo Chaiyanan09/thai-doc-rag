@@ -47,6 +47,10 @@ public class Document {
     @Column(name = "error_message")
     private String errorMessage;
 
+    /** SHA-256 ของไฟล์ ใช้ตรวจว่าเคยอัปโหลดไฟล์เดียวกันแล้วหรือยัง */
+    @Column(name = "content_hash", length = 64)
+    private String contentHash;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -54,8 +58,9 @@ public class Document {
         // for JPA
     }
 
-    public Document(String filename) {
+    public Document(String filename, String contentHash) {
         this.filename = filename;
+        this.contentHash = contentHash;
         this.status = DocumentStatus.PROCESSING;
         this.createdAt = Instant.now();
     }
@@ -100,6 +105,10 @@ public class Document {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public String getContentHash() {
+        return contentHash;
     }
 
     public Instant getCreatedAt() {

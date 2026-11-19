@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,13 +69,50 @@ public class ChunkRepository {
         return client.sql(sql)
                 .param("query", PgVector.format(queryVector))
                 .param("limit", limit)
-                .query((rs, rowNum) -> new SearchHit(
-                        rs.getLong("id"),
-                        rs.getObject("document_id", UUID.class),
-                        rs.getString("filename"),
-                        rs.getInt("page_number"),
-                        rs.getString("content"),
-                        rs.getDouble("score")))
+                .query(ChunkRepository::toHit)
                 .list();
+    }
+
+    /**
+     * ค้นเฉพาะในเอกสารที่ระบุ (ไฟล์ที่แนบในแชท) ถ้าไม่ระบุเลยจะค้นทุกเอกสาร
+     *
+     * ใช้ CTE แบบ MATERIALIZED ดึง chunk ของเอกสารนั้นออกมาก่อนแล้วเรียงระยะแบบตรงตัว
+     * เพราะถ้าใช้ HNSW index ตรงๆ Postgres จะหาเพื่อนบ้านจากทุกเอกสารก่อนแล้วค่อยกรอง
+     * เอกสารที่เล็กเมื่อเทียบกับทั้งระบบอาจโดนกรองจนเหลือไม่ถึง k ชิ้นหรือไม่เหลือเลย
+     * (เอกสารหนึ่งมีไม่กี่ร้อยชิ้น เรียงตรงตัวยังเร็วอยู่)
+     */
+    public List<SearchHit> search(float[] queryVector, int limit, Collection<UUID> documentIds) {
+        if (documentIds == null || documentIds.isEmpty()) {
+            return search(queryVector, limit);
+        }
+        String sql = """
+                WITH scoped AS MATERIALIZED (
+                    SELECT c.id, c.document_id, d.filename, c.page_number, c.content, c.embedding
+                    FROM chunks c
+                    JOIN documents d ON d.id = c.document_id
+                    WHERE d.status = 'READY' AND c.document_id IN (:documentIds)
+                )
+                SELECT id, document_id, filename, page_number, content,
+                       1 - (embedding <=> CAST(:query AS vector)) AS score
+                FROM scoped
+                ORDER BY embedding <=> CAST(:query AS vector)
+                LIMIT :limit
+                """;
+        return client.sql(sql)
+                .param("documentIds", List.copyOf(documentIds))
+                .param("query", PgVector.format(queryVector))
+                .param("limit", limit)
+                .query(ChunkRepository::toHit)
+                .list();
+    }
+
+    private static SearchHit toHit(ResultSet rs, int rowNum) throws SQLException {
+        return new SearchHit(
+                rs.getLong("id"),
+                rs.getObject("document_id", UUID.class),
+                rs.getString("filename"),
+                rs.getInt("page_number"),
+                rs.getString("content"),
+                rs.getDouble("score"));
     }
 }
