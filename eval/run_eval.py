@@ -5,6 +5,10 @@
     py eval\\run_eval.py                       (ชื่อรอบตั้งเองจากค่าที่ backend ใช้ เช่น tagged-k5-v2)
     py eval\\run_eval.py --label try --only q11,q12
     py eval\\run_eval.py --label search-only --no-chat
+    py eval\\run_eval.py --questions eval\\questions-nu.json   (ชุดคำถามอื่น)
+
+ค้นเฉพาะเอกสารที่ชุดคำถามระบุไว้ในช่อง "document" ของไฟล์คำถาม แม้ในระบบจะมีไฟล์อื่นด้วย
+เปลี่ยนได้ด้วย --document <ชื่อไฟล์หรือ id> (ใส่ซ้ำได้) หรือ --all-documents เพื่อค้นทุกไฟล์
 
 ผลลัพธ์อยู่ใน eval/results/<วันเวลา>_<label>.json และ .md
 """
@@ -26,7 +30,7 @@ RESULTS = HERE / "results"
 
 # ---------- เรียก API ----------
 
-def call(api: str, path: str, body: dict | None = None, timeout: int = 120):
+def call(api: str, path: str, body: dict | None = None, timeout: int = 300):
     url = api.rstrip("/") + path
     data = json.dumps(body).encode("utf-8") if body is not None else None
     headers = {"Content-Type": "application/json"} if data else {}
@@ -37,6 +41,27 @@ def call(api: str, path: str, body: dict | None = None, timeout: int = 120):
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"HTTP {e.code} {path}: {detail[:300]}") from None
+
+
+def resolve_documents(api: str, specs: list[str]) -> list[dict]:
+    """แปลงชื่อไฟล์หรือ id เป็นเอกสารที่พร้อมใช้ในระบบ ถ้าหาไม่เจอให้หยุดพร้อมบอกว่ามีไฟล์อะไรบ้าง"""
+    docs = call(api, "/api/documents")
+    ready = [d for d in docs if d["status"] == "READY"]
+    chosen = []
+    for spec in specs:
+        name = Path(spec).name  # รับได้ทั้ง "sample-docs/x.pdf" และ "x.pdf"
+        matches = [d for d in ready if d["id"] == spec or d["filename"] == name]
+        if not matches:
+            available = "\n".join(f"  - {d['filename']}  ({d['id']})" for d in ready) or "  (ยังไม่มีเอกสาร)"
+            raise SystemExit(
+                f"ไม่พบเอกสาร '{spec}' ที่พร้อมใช้ในระบบ\n"
+                f"แนบไฟล์นี้ผ่านหน้าเว็บก่อน หรือเลือกจากรายการนี้ด้วย --document:\n{available}"
+            )
+        if len(matches) > 1:
+            print(f"คำเตือน: มี '{name}' ในระบบ {len(matches)} ชุด (อัปโหลดซ้ำ) จะค้นทุกชุด ผลอาจมีชิ้นซ้ำกัน"
+                  " ลบชุดที่ไม่ใช้ผ่านเมนู + ในหน้าเว็บ")
+        chosen += [m for m in matches if m["id"] not in {c["id"] for c in chosen}]
+    return [{"id": d["id"], "filename": d["filename"]} for d in chosen]
 
 
 # ---------- ให้คะแนน ----------
@@ -144,7 +169,10 @@ METRIC_LABELS = [
 
 def to_markdown(run: dict) -> str:
     s = run["summary"]
-    lines = [f"# Eval: {run['label']}", "", f"- เวลา: {run['started_at']}", f"- ค่าตั้งค่า: `{json.dumps(run['settings'], ensure_ascii=False)}`", ""]
+    scope = ", ".join(d["filename"] for d in run.get("documents") or []) or "ทุกเอกสารในระบบ"
+    lines = [f"# Eval: {run['label']}", "", f"- เวลา: {run['started_at']}",
+             f"- ชุดคำถาม: {run.get('questions_file', 'questions.json')}", f"- ค้นจาก: {scope}",
+             f"- ค่าตั้งค่า: `{json.dumps(run['settings'], ensure_ascii=False)}`", ""]
     lines += ["| ตัวชี้วัด | ค่า |", "|---|---|"]
     lines += [f"| {label} | {s[key]} |" for key, label in METRIC_LABELS if key in s]
     if "correct_by_type" in s:
@@ -185,9 +213,15 @@ def main() -> int:
     parser.add_argument("--only", help="รันเฉพาะบางข้อ เช่น q11,q12")
     parser.add_argument("--no-chat", action="store_true", help="วัดเฉพาะการค้น (เร็ว ไม่เรียก LLM)")
     parser.add_argument("--delay", type=float, default=0.5, help="เว้นระหว่างคำถาม (วินาที) กันเกิน rate limit")
+    parser.add_argument("--questions", type=Path, default=QUESTIONS, help="ไฟล์ชุดคำถาม (ค่าเริ่มต้น eval/questions.json)")
+    scope = parser.add_mutually_exclusive_group()
+    scope.add_argument("--document", action="append", metavar="FILE_OR_ID",
+                       help="ค้นเฉพาะเอกสารนี้ (ชื่อไฟล์หรือ id ใส่ซ้ำได้) ไม่ใส่ = ใช้ช่อง document ในไฟล์คำถาม")
+    scope.add_argument("--all-documents", action="store_true", help="ค้นทุกเอกสารในระบบ (แบบก่อนมีปุ่มแนบไฟล์)")
     args = parser.parse_args()
 
-    questions = json.loads(QUESTIONS.read_text(encoding="utf-8"))["questions"]
+    question_set = json.loads(args.questions.read_text(encoding="utf-8"))
+    questions = question_set["questions"]
     if args.only:
         wanted = set(args.only.split(","))
         questions = [q for q in questions if q["id"] in wanted]
@@ -200,23 +234,38 @@ def main() -> int:
         settings = call(args.api, "/api/chat/settings")
     except RuntimeError:
         settings = {}
+
+    if args.all_documents:
+        documents = []
+    else:
+        specs = args.document or ([question_set["document"]] if question_set.get("document") else [])
+        documents = resolve_documents(args.api, specs) if specs else []
+    doc_ids = [d["id"] for d in documents]
+
     if not args.label:
         args.label = f"{settings.get('sourceFormat', 'unknown')}-k{settings.get('topK', '?')}-{settings.get('promptVersion', 'v1')}"
         if settings.get("verifyCitations"):
             args.label += "-cv"
-    print(f"รอบ: {args.label}  ค่าตั้งค่า: {settings}\n")
+        if args.questions.resolve() != QUESTIONS:
+            args.label = f"{args.questions.stem}-{args.label}"
+        if args.all_documents:
+            args.label += "-alldocs"
+    print(f"รอบ: {args.label}  ค่าตั้งค่า: {settings}")
+    print("ค้นจาก:", ", ".join(d["filename"] for d in documents) if documents else "ทุกเอกสารในระบบ", "\n")
 
     started = datetime.now()
     rows = []
     for q in questions:
         row = {k: q[k] for k in ("id", "type", "question", "pages")}
-        hits = call(args.api, "/api/search?" + urllib.parse.urlencode({"q": q["question"], "limit": 5}))["results"]
+        params = {"q": q["question"], "limit": 5, "documentIds": doc_ids}
+        hits = call(args.api, "/api/search?" + urllib.parse.urlencode(params, doseq=True))["results"]
         if q["pages"]:
             row["search_rank"] = search_rank(hits, q["pages"])
 
         if not args.no_chat:
             try:
-                row["chat"] = score_chat(call(args.api, "/api/chat", {"question": q["question"]}), q)
+                body = {"question": q["question"], "documentIds": doc_ids}
+                row["chat"] = score_chat(call(args.api, "/api/chat", body), q)
             except RuntimeError as e:
                 row["chat"] = {"error": str(e), "correct": False}
             time.sleep(args.delay)
@@ -227,6 +276,7 @@ def main() -> int:
         rows.append(row)
 
     run = {"label": args.label, "started_at": started.isoformat(timespec="seconds"), "settings": settings,
+           "questions_file": args.questions.name, "documents": documents,
            "summary": summarize(rows), "rows": rows}
 
     RESULTS.mkdir(exist_ok=True)

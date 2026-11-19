@@ -1,0 +1,375 @@
+{
+  "label": "scope-check",
+  "started_at": "2026-11-20T00:01:37",
+  "settings": {
+    "model": "typhoon-v2.5-30b-a3b-instruct",
+    "topK": 5,
+    "minScore": 0.35,
+    "sourceFormat": "tagged",
+    "promptVersion": "v2",
+    "verifyCitations": true
+  },
+  "questions_file": "questions.json",
+  "documents": [
+    {
+      "id": "8645adc9-eae2-4057-b708-cd92b1dba3b8",
+      "filename": "sample-regulation-th.pdf"
+    }
+  ],
+  "summary": {
+    "questions": 40,
+    "answerable": 35,
+    "unanswerable": 5,
+    "hit@1": 82.9,
+    "hit@3": 91.4,
+    "hit@5": 97.1,
+    "mrr": 0.871
+  },
+  "rows": [
+    {
+      "id": "q01",
+      "type": "direct",
+      "question": "ภาคเรียนปกติลงทะเบียนได้สูงสุดกี่หน่วยกิต",
+      "pages": [
+        2
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q02",
+      "type": "colloquial",
+      "question": "ลงทะเบียนช้าโดนปรับเท่าไหร่",
+      "pages": [
+        2
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q03",
+      "type": "direct",
+      "question": "ถอนวิชาได้ถึงสัปดาห์ไหน",
+      "pages": [
+        2
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q04",
+      "type": "direct",
+      "question": "ภาคฤดูร้อนเรียนกี่สัปดาห์",
+      "pages": [
+        1
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q05",
+      "type": "colloquial",
+      "question": "ถ้าป่วยหนักต้องหยุดเรียนหลายอาทิตย์ต้องทำยังไง",
+      "pages": [
+        3
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q06",
+      "type": "direct",
+      "question": "ลาพักแล้วต้องจ่ายเงินไหม",
+      "pages": [
+        3
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q07",
+      "type": "direct",
+      "question": "ลาพักได้นานสุดเท่าไร",
+      "pages": [
+        3
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q08",
+      "type": "colloquial",
+      "question": "ขาดเรียนบ่อยจะมีสิทธิ์สอบไหม",
+      "pages": [
+        4
+      ],
+      "search_rank": 4
+    },
+    {
+      "id": "q09",
+      "type": "direct",
+      "question": "ได้ I แล้วไม่แก้จะเป็นยังไง",
+      "pages": [
+        4
+      ],
+      "search_rank": 4
+    },
+    {
+      "id": "q10",
+      "type": "table",
+      "question": "เกรด C+ คิดเป็นกี่แต้ม",
+      "pages": [
+        4
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q11",
+      "type": "colloquial",
+      "question": "เกรดเฉลี่ยเท่าไหร่ถึงโดนรีไทร์",
+      "pages": [
+        5
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q12",
+      "type": "colloquial",
+      "question": "ลอกข้อสอบโดนอะไร",
+      "pages": [
+        5
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q13",
+      "type": "direct",
+      "question": "หลักสูตร 4 ปี เรียนได้นานสุดกี่ปี",
+      "pages": [
+        5
+      ],
+      "search_rank": null
+    },
+    {
+      "id": "q14",
+      "type": "colloquial",
+      "question": "โดนรีไทร์แล้วกลับมาเรียนได้ไหม",
+      "pages": [
+        5
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q15",
+      "type": "direct",
+      "question": "เกียรตินิยมอันดับหนึ่งต้องได้เกรดเฉลี่ยเท่าไร",
+      "pages": [
+        6
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q16",
+      "type": "condition",
+      "question": "เคยติด F ยังได้เกียรตินิยมอันดับสองไหม",
+      "pages": [
+        6
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q17",
+      "type": "direct",
+      "question": "ต้องยื่นขอจบการศึกษาเมื่อไร",
+      "pages": [
+        6
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q18",
+      "type": "colloquial",
+      "question": "ค่าเทอมเท่าไหร่",
+      "pages": [
+        7
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q19",
+      "type": "condition",
+      "question": "ลาออกตอนสัปดาห์แรกได้เงินคืนไหม",
+      "pages": [
+        7
+      ],
+      "search_rank": 3
+    },
+    {
+      "id": "q20",
+      "type": "direct",
+      "question": "บัตรนักศึกษาหายทำใหม่กี่บาท",
+      "pages": [
+        7
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q21",
+      "type": "direct",
+      "question": "หลักสูตรสี่ปีต้องเรียนกี่หน่วยกิต",
+      "pages": [
+        1
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q22",
+      "type": "direct",
+      "question": "ใครมีอำนาจตีความระเบียบนี้",
+      "pages": [
+        1
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q23",
+      "type": "direct",
+      "question": "ลงทะเบียนเรียนต้องให้ใครเห็นชอบ",
+      "pages": [
+        2
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q24",
+      "type": "colloquial",
+      "question": "อยากเข้าฟังวิชาโดยไม่เอาหน่วยกิตได้ไหม",
+      "pages": [
+        2
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q25",
+      "type": "condition",
+      "question": "ไปเป็นทหารลาพักได้นานแค่ไหน",
+      "pages": [
+        3
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q26",
+      "type": "direct",
+      "question": "ช่วงที่ลาพักนับรวมในระยะเวลาเรียนไหม",
+      "pages": [
+        3
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q27",
+      "type": "direct",
+      "question": "เกรดเฉลี่ยคิดทศนิยมกี่ตำแหน่ง",
+      "pages": [
+        4
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q28",
+      "type": "table",
+      "question": "เกรด B+ มีความหมายว่าอะไร",
+      "pages": [
+        4
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q29",
+      "type": "colloquial",
+      "question": "ถ้าเทอมนี้ไม่ลงทะเบียนเรียนเลยจะเป็นอะไรไหม",
+      "pages": [
+        5
+      ],
+      "search_rank": 3
+    },
+    {
+      "id": "q30",
+      "type": "colloquial",
+      "question": "ให้เพื่อนเข้าสอบแทนจะโดนอะไร",
+      "pages": [
+        5
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q31",
+      "type": "direct",
+      "question": "จะจบการศึกษาต้องได้เกรดเฉลี่ยอย่างน้อยเท่าไร",
+      "pages": [
+        6
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q32",
+      "type": "condition",
+      "question": "เคยทุจริตในการสอบยังได้เกียรตินิยมไหม",
+      "pages": [
+        6
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q33",
+      "type": "colloquial",
+      "question": "ค่าเทอมภาคฤดูร้อนเท่าไหร่",
+      "pages": [
+        7
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q34",
+      "type": "colloquial",
+      "question": "ขอใบเกรดภาษาอังกฤษเสียเงินเท่าไร",
+      "pages": [
+        7
+      ],
+      "search_rank": 1
+    },
+    {
+      "id": "q35",
+      "type": "colloquial",
+      "question": "ไม่มีเงินจ่ายค่าเทอม ทำอะไรได้บ้าง",
+      "pages": [
+        7
+      ],
+      "search_rank": 3
+    },
+    {
+      "id": "q36",
+      "type": "unanswerable",
+      "question": "มหาวิทยาลัยมีหอพักให้ไหม",
+      "pages": []
+    },
+    {
+      "id": "q37",
+      "type": "unanswerable",
+      "question": "มีที่จอดรถให้นักศึกษาไหม",
+      "pages": []
+    },
+    {
+      "id": "q38",
+      "type": "unanswerable",
+      "question": "เรียนออนไลน์ทั้งเทอมได้ไหม",
+      "pages": []
+    },
+    {
+      "id": "q39",
+      "type": "unanswerable",
+      "question": "ต้องแต่งชุดนักศึกษามาสอบไหม",
+      "pages": []
+    },
+    {
+      "id": "q40",
+      "type": "unanswerable",
+      "question": "อธิการบดีชื่ออะไร",
+      "pages": []
+    }
+  ]
+}
