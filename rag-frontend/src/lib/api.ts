@@ -14,20 +14,6 @@ export interface DocumentItem {
   createdAt: string;
 }
 
-export interface SearchHit {
-  chunkId: number;
-  documentId: string;
-  filename: string;
-  page: number;
-  content: string;
-  score: number;
-}
-
-export interface SearchResult {
-  query: string;
-  results: SearchHit[];
-}
-
 export interface ChatSource {
   n: number; // เลขอ้างอิง [n] ในคำตอบ
   chunkId: number;
@@ -86,13 +72,11 @@ export const api = {
 
   deleteDocument: (id: string) => request<void>(`/api/documents/${id}`, { method: "DELETE" }),
 
-  chat: (question: string) =>
+  // documentIds = ไฟล์ที่แนบในแชทนี้ ถ้าไม่ส่ง backend จะค้นจากทุกเอกสาร
+  chat: (question: string, documentIds: string[] = []) =>
     request<ChatReply>("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify(documentIds.length > 0 ? { question, documentIds } : { question }),
     }),
-
-  search: (q: string, limit: number) =>
-    request<SearchResult>(`/api/search?${new URLSearchParams({ q, limit: String(limit) })}`),
 };

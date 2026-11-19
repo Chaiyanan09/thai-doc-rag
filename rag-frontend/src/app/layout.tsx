@@ -4,7 +4,6 @@ import Link from "next/link";
 import "@fontsource/ibm-plex-sans-thai/400.css";
 import "@fontsource/ibm-plex-sans-thai/500.css";
 import "@fontsource/ibm-plex-sans-thai/600.css";
-import NavLinks from "@/components/NavLinks";
 import StatusBar from "@/components/StatusBar";
 import "./globals.css";
 
@@ -19,12 +18,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <header className="border-b border-zinc-200 bg-white">
           <div className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-3 px-6 py-3">
-            <div className="flex items-center gap-4">
-              <Link href="/" className="font-semibold tracking-tight">
-                ThaiDocRAG
-              </Link>
-              <NavLinks />
-            </div>
+            <Link href="/" className="font-semibold tracking-tight">
+              ThaiDocRAG
+            </Link>
             <StatusBar />
           </div>
         </header>
