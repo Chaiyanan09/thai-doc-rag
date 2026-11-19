@@ -36,6 +36,8 @@ public class ChatService {
     private final String model;
     private final int topK;
     private final double minScore;
+    private final PromptBuilder.SourceFormat sourceFormat;
+    private final boolean verifyCitations;
 
     public ChatService(ChatClient.Builder chatClientBuilder,
                        ChunkRepository chunks,
@@ -43,7 +45,9 @@ public class ChatService {
                        ChatLogRepository chatLogs,
                        @Value("${spring.ai.openai.chat.model:unknown}") String model,
                        @Value("${app.chat.top-k:5}") int topK,
-                       @Value("${app.chat.min-score:0.35}") double minScore) {
+                       @Value("${app.chat.min-score:0.35}") double minScore,
+                       @Value("${app.chat.source-format:plain}") String sourceFormat,
+                       @Value("${app.chat.verify-citations:true}") boolean verifyCitations) {
         this.chatClient = chatClientBuilder.defaultSystem(PromptBuilder.SYSTEM_PROMPT).build();
         this.chunks = chunks;
         this.modelService = modelService;
@@ -51,6 +55,15 @@ public class ChatService {
         this.model = model;
         this.topK = topK;
         this.minScore = minScore;
+        this.sourceFormat = PromptBuilder.SourceFormat.valueOf(sourceFormat.strip().toUpperCase());
+        this.verifyCitations = verifyCitations;
+        log.info("Chat settings: {}", settings());
+    }
+
+    /** ค่าที่ใช้อยู่ตอนนี้ ให้ eval บันทึกไว้คู่กับผลลัพธ์ */
+    public ChatSettings settings() {
+        return new ChatSettings(model, topK, minScore, sourceFormat.name().toLowerCase(),
+                PromptBuilder.PROMPT_VERSION, verifyCitations);
     }
 
     public ChatReply ask(String rawQuestion) {
@@ -70,18 +83,32 @@ public class ChatService {
 
         if (relevant.isEmpty()) {
             String answer = hits.isEmpty() ? NO_DOCUMENTS : PromptBuilder.NOT_FOUND;
-            return save(new ChatReply(question, answer, false, List.of(), model, retrievalMs, 0));
+            return save(new ChatReply(question, answer, false, List.of(), model, retrievalMs, 0, 0));
         }
 
         long llmStart = System.nanoTime();
-        String answer = callLlm(PromptBuilder.userPrompt(question, relevant));
+        String answer = callLlm(PromptBuilder.userPrompt(question, relevant, sourceFormat));
         long llmMs = millisSince(llmStart);
 
         String rawAnswer = answer;
         CitationParser.Result citations = CitationParser.normalize(answer, relevant.size());
         boolean found = PromptBuilder.isFound(answer, citations.cited());
-        Set<Integer> cited = found ? citations.cited() : Set.of();
-        answer = found ? citations.text() : PromptBuilder.NOT_FOUND;
+        Set<Integer> cited = Set.of();
+        int citationFixes = 0;
+        if (found) {
+            answer = citations.text();
+            cited = citations.cited();
+            if (verifyCitations) {
+                // เทียบข้อความจริงว่าแต่ละประโยคมาจากชิ้นไหน แล้วแก้เลขอ้างอิงที่ผิดหรือขาด
+                CitationVerifier.Result verified = CitationVerifier.verify(
+                        answer, relevant.stream().map(SearchHit::content).toList());
+                answer = verified.text();
+                cited = verified.cited();
+                citationFixes = verified.changes();
+            }
+        } else {
+            answer = PromptBuilder.NOT_FOUND;
+        }
 
         List<ChatReply.Source> sources = new ArrayList<>(relevant.size());
         for (int i = 0; i < relevant.size(); i++) {
@@ -89,9 +116,9 @@ public class ChatService {
             sources.add(new ChatReply.Source(i + 1, hit.chunkId(), hit.documentId(), hit.filename(),
                     hit.page(), hit.content(), hit.score(), cited.contains(i + 1)));
         }
-        log.info("chat: {} chunks, cited {}, found={}, retrieval {} ms, llm {} ms, answer: {}",
-                relevant.size(), cited, found, retrievalMs, llmMs, abbreviate(rawAnswer));
-        return save(new ChatReply(question, answer, found, sources, model, retrievalMs, llmMs));
+        log.info("chat: {} chunks, cited {}, found={}, fixes={}, retrieval {} ms, llm {} ms, answer: {}",
+                relevant.size(), cited, found, citationFixes, retrievalMs, llmMs, abbreviate(rawAnswer));
+        return save(new ChatReply(question, answer, found, sources, model, retrievalMs, llmMs, citationFixes));
     }
 
     private String callLlm(String userPrompt) {

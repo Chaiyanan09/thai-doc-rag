@@ -26,6 +26,15 @@ class PromptBuilderTest {
     }
 
     @Test
+    void taggedFormatWrapsEachChunkInASourceTag() {
+        List<SearchHit> hits = List.of(new SearchHit(10, UUID.randomUUID(), "rules.pdf", 3, "ข้อ 16 ค่ารักษาสภาพ", 0.61));
+
+        String prompt = PromptBuilder.userPrompt("ลาพักต้องจ่ายเงินไหม", hits, PromptBuilder.SourceFormat.TAGGED);
+
+        assertThat(prompt).contains("<source id=\"S1\" file=\"rules.pdf\" page=\"3\">\nข้อ 16 ค่ารักษาสภาพ\n</source>");
+    }
+
+    @Test
     void systemPromptTellsTheModelWhatToSayWhenNothingIsFound() {
         assertThat(PromptBuilder.SYSTEM_PROMPT).contains(PromptBuilder.NOT_FOUND);
     }

@@ -7,7 +7,8 @@ import java.util.UUID;
  * คำตอบที่ส่งให้หน้าเว็บ
  *
  * @param found   false เมื่อเอกสารไม่มีคำตอบ (หน้าเว็บจะแสดงต่างจากคำตอบปกติ)
- * @param sources chunk ที่ส่งให้ LLM อ่าน เรียงตามเลขอ้างอิง [1], [2], ...
+ * @param sources       chunk ที่ส่งให้ LLM อ่าน เรียงตามรหัสอ้างอิง [S1], [S2], ...
+ * @param citationFixes จำนวนประโยคที่ CitationVerifier เติมหรือแก้เลขอ้างอิงให้
  */
 public record ChatReply(
         String question,
@@ -16,7 +17,8 @@ public record ChatReply(
         List<Source> sources,
         String model,
         long retrievalMs,
-        long llmMs
+        long llmMs,
+        int citationFixes
 ) {
 
     /** @param cited true ถ้าคำตอบอ้างถึงชิ้นนี้ */
