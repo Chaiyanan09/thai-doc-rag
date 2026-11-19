@@ -47,6 +47,7 @@ export interface ChatReply {
   model: string;
   retrievalMs: number;
   llmMs: number;
+  citationFixes: number; // จำนวนประโยคที่ระบบตรวจแล้วแก้เลขอ้างอิงให้
 }
 
 export interface Health {

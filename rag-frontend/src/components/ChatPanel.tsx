@@ -240,6 +240,7 @@ function AssistantMessage({ reply }: { reply: ChatReply }) {
         )}
         <span>ค้นหา {reply.retrievalMs} ms</span>
         <span>ตอบ {(reply.llmMs / 1000).toFixed(1)} วินาที</span>
+        {reply.citationFixes > 0 && <span>ระบบแก้เลขอ้างอิง {reply.citationFixes} จุด</span>}
         <span>{reply.model}</span>
       </div>
     </div>
