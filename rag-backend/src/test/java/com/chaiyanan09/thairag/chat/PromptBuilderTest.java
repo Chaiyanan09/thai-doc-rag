@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PromptBuilderTest {
 
@@ -48,5 +49,28 @@ class PromptBuilderTest {
         // ตอบได้บางส่วน แล้วบอกว่าส่วนที่เหลือไม่มี = ยังนับว่าหาเจอ
         assertThat(PromptBuilder.isFound("ต้องยื่นต่อคณบดี [S1] ส่วนค่าธรรมเนียม" + PromptBuilder.NOT_FOUND, Set.of(1))).isTrue();
         assertThat(PromptBuilder.isFound("ต้องยื่นต่อคณบดี", Set.of())).isTrue();
+        // แบบที่ prompt v3 สั่ง: บอกสิ่งที่เอกสารระบุก่อน แล้วบอกว่าไม่ระบุรายละเอียด = หาเจอ
+        assertThat(PromptBuilder.isFound(
+                "ต้องชำระค่าปรับตามที่กำหนดในประกาศมหาวิทยาลัย [S1] แต่เอกสารนี้ไม่ได้ระบุจำนวนเงิน", Set.of(1))).isTrue();
+    }
+
+    @Test
+    void everyPromptVersionIsFormattedAndKeepsTheNotFoundSentence() {
+        assertThat(PromptBuilder.versions()).containsExactly("v2", "v3", "v4");
+        for (String version : PromptBuilder.versions()) {
+            assertThat(PromptBuilder.systemPrompt(version))
+                    .as(version)
+                    .doesNotContain("%s")
+                    .contains("\"" + PromptBuilder.NOT_FOUND + "\"");
+        }
+        assertThat(PromptBuilder.systemPrompt(null)).isEqualTo(PromptBuilder.SYSTEM_PROMPT);
+        assertThat(PromptBuilder.systemPrompt(" V4 ")).isEqualTo(PromptBuilder.systemPrompt("v4"));
+    }
+
+    @Test
+    void unknownPromptVersionFailsWithTheListOfVersions() {
+        assertThatThrownBy(() -> PromptBuilder.systemPrompt("v9"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("v2");
     }
 }

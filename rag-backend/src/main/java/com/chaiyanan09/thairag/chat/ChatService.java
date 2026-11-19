@@ -45,6 +45,7 @@ public class ChatService {
     private final double minScore;
     private final PromptBuilder.SourceFormat sourceFormat;
     private final boolean verifyCitations;
+    private final String promptVersion;
 
     public ChatService(ChatClient.Builder chatClientBuilder,
                        ChunkRepository chunks,
@@ -54,8 +55,10 @@ public class ChatService {
                        @Value("${app.chat.top-k:5}") int topK,
                        @Value("${app.chat.min-score:0.35}") double minScore,
                        @Value("${app.chat.source-format:plain}") String sourceFormat,
-                       @Value("${app.chat.verify-citations:true}") boolean verifyCitations) {
-        this.chatClient = chatClientBuilder.defaultSystem(PromptBuilder.SYSTEM_PROMPT).build();
+                       @Value("${app.chat.verify-citations:true}") boolean verifyCitations,
+                       @Value("${app.chat.prompt-version:" + PromptBuilder.DEFAULT_PROMPT_VERSION + "}") String promptVersion) {
+        this.promptVersion = promptVersion.strip().toLowerCase();
+        this.chatClient = chatClientBuilder.defaultSystem(PromptBuilder.systemPrompt(this.promptVersion)).build();
         this.chunks = chunks;
         this.modelService = modelService;
         this.chatLogs = chatLogs;
@@ -70,7 +73,7 @@ public class ChatService {
     /** ค่าที่ใช้อยู่ตอนนี้ ให้ eval บันทึกไว้คู่กับผลลัพธ์ */
     public ChatSettings settings() {
         return new ChatSettings(model, topK, minScore, sourceFormat.name().toLowerCase(),
-                PromptBuilder.PROMPT_VERSION, verifyCitations);
+                promptVersion, verifyCitations);
     }
 
     /** ค้นจากทุกเอกสารในระบบ (eval ใช้แบบนี้) */
