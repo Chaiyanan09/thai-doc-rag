@@ -9,8 +9,8 @@ function Pill({ label, ok }: Item) {
   const color =
     ok === null ? "bg-zinc-300" : ok ? "bg-emerald-500" : "bg-rose-500";
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-sm text-zinc-700">
-      <span className={`h-2 w-2 rounded-full ${color}`} />
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-2.5 py-0.5 text-xs text-zinc-600">
+      <span className={`h-1.5 w-1.5 rounded-full ${color}`} />
       {label}
     </span>
   );

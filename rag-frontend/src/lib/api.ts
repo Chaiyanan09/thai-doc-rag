@@ -28,6 +28,27 @@ export interface SearchResult {
   results: SearchHit[];
 }
 
+export interface ChatSource {
+  n: number; // เลขอ้างอิง [n] ในคำตอบ
+  chunkId: number;
+  documentId: string;
+  filename: string;
+  page: number;
+  content: string;
+  score: number;
+  cited: boolean; // คำตอบอ้างถึงชิ้นนี้หรือไม่
+}
+
+export interface ChatReply {
+  question: string;
+  answer: string;
+  found: boolean; // false = เอกสารไม่มีคำตอบ
+  sources: ChatSource[];
+  model: string;
+  retrievalMs: number;
+  llmMs: number;
+}
+
 export interface Health {
   status: string;
   database: string;
@@ -63,6 +84,13 @@ export const api = {
   },
 
   deleteDocument: (id: string) => request<void>(`/api/documents/${id}`, { method: "DELETE" }),
+
+  chat: (question: string) =>
+    request<ChatReply>("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question }),
+    }),
 
   search: (q: string, limit: number) =>
     request<SearchResult>(`/api/search?${new URLSearchParams({ q, limit: String(limit) })}`),
