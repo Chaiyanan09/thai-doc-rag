@@ -1,0 +1,693 @@
+{
+  "label": "questions-nu-tagged-k5-v2-cv",
+  "started_at": "2026-11-20T01:03:35",
+  "settings": {
+    "model": "typhoon-v2.5-30b-a3b-instruct",
+    "topK": 5,
+    "minScore": 0.35,
+    "sourceFormat": "tagged",
+    "promptVersion": "v2",
+    "verifyCitations": true
+  },
+  "questions_file": "questions-nu.json",
+  "documents": [
+    {
+      "id": "f7a7806e-38cb-49b0-9a88-dc92eb277226",
+      "filename": "ข้อบังคับมหาวิทยาลัยนเรศวร ว่าด้วย การศึกษาระดับปริญญาตรี พ.ศ. 2559.pdf"
+    }
+  ],
+  "summary": {
+    "questions": 22,
+    "answerable": 20,
+    "unanswerable": 2,
+    "hit@1": 75.0,
+    "hit@3": 95.0,
+    "hit@5": 100.0,
+    "mrr": 0.838,
+    "correct": 81.8,
+    "answered": 85.0,
+    "facts_ok": 80.0,
+    "citation_hit": 80.0,
+    "citation_precision": 94.7,
+    "refused_correctly": 100.0,
+    "avg_llm_ms": 1307,
+    "citation_fixed_answers": 0,
+    "invented_answers": 0,
+    "errors": 0,
+    "correct_by_type": {
+      "colloquial": "3/5",
+      "condition": "4/4",
+      "direct": "5/5",
+      "number_words": "2/2",
+      "partial": "0/2",
+      "table": "2/2",
+      "unanswerable": "2/2"
+    }
+  },
+  "rows": [
+    {
+      "id": "n01",
+      "type": "direct",
+      "question": "ภาคปกติลงทะเบียนได้กี่หน่วยกิต",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตสามารถลงทะเบียนเรียนรายวิชาในภาคการศึกษาปกติได้ไม่น้อยกว่า 9 หน่วยกิตแต่ไม่เกิน 22 หน่วยกิต [S2]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          6,
+          4,
+          5,
+          6
+        ],
+        "retrieval_ms": 50,
+        "llm_ms": 1315,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n02",
+      "type": "direct",
+      "question": "ภาคฤดูร้อนลงได้สูงสุดกี่หน่วยกิต",
+      "pages": [
+        6
+      ],
+      "search_rank": 2,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตสามารถลงทะเบียนเรียนรายวิชาสำหรับภาคฤดูร้อนได้ไม่เกิน 9 หน่วยกิต [S2]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          3,
+          6,
+          6,
+          4,
+          4
+        ],
+        "retrieval_ms": 54,
+        "llm_ms": 1093,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n03",
+      "type": "direct",
+      "question": "ถอนรายวิชาได้ถึงสัปดาห์ไหน",
+      "pages": [
+        7
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "การถอนรายวิชาจะกระทำได้ภายในกำหนดเวลาไม่เกินสัปดาห์ที่ 12 ของเวลาเรียนของภาคการศึกษานับตั้งแต่วันเปิดภาคการศึกษา [S1]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          7,
+          5,
+          4,
+          6,
+          9
+        ],
+        "retrieval_ms": 118,
+        "llm_ms": 1208,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n04",
+      "type": "direct",
+      "question": "ต้องเข้าเรียนกี่เปอร์เซ็นต์ถึงมีสิทธิ์สอบ",
+      "pages": [
+        7
+      ],
+      "search_rank": 3,
+      "chat": {
+        "found": true,
+        "answer": "ต้องเข้าเรียนไม่น้อยกว่าร้อยละ 80 ของเวลาเรียนทั้งหมดจึงจะมีสิทธิ์ได้รับการวัดและประเมินผลในรายวิชานั้น [S3]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          2,
+          1,
+          7,
+          3,
+          6
+        ],
+        "retrieval_ms": 102,
+        "llm_ms": 1130,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n05",
+      "type": "colloquial",
+      "question": "เกรดเฉลี่ยเท่าไหร่ถึงโดนรีไทร์",
+      "pages": [
+        4,
+        10
+      ],
+      "search_rank": 3,
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          11,
+          11,
+          4,
+          2,
+          7
+        ],
+        "retrieval_ms": 61,
+        "llm_ms": 648,
+        "citation_fixes": 0,
+        "facts_ok": false,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "n06",
+      "type": "colloquial",
+      "question": "ติด I ต้องแก้ภายในเมื่อไหร่",
+      "pages": [
+        8
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ต้องดำเนินการขอรับการวัดและประเมินผลเพื่อแก้อักษร I ให้สมบูรณ์ภายใน 4 สัปดาห์นับแต่วันเปิดภาคการศึกษาถัดไปของการลงทะเบียนเรียน [S1]",
+        "cited_pages": [
+          8
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          8,
+          7,
+          8,
+          10,
+          6
+        ],
+        "retrieval_ms": 53,
+        "llm_ms": 1400,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n07",
+      "type": "colloquial",
+      "question": "ได้ D ลงเรียนใหม่ได้ไหม",
+      "pages": [
+        8
+      ],
+      "search_rank": 4,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตที่ได้ผลการเรียนเป็น D ไม่จำเป็นต้องลงทะเบียนเรียนรายวิชานั้นซ้ำ เนื่องจาก D ถือเป็นผลการเรียนที่ผ่านเกณฑ์ จึงไม่อยู่ในข้อกำหนดให้ต้องลงทะเบียนเรียนซ้ำ [S3]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 0,
+        "sent_pages": [
+          9,
+          6,
+          6,
+          8,
+          6
+        ],
+        "retrieval_ms": 119,
+        "llm_ms": 1664,
+        "citation_fixes": 0,
+        "facts_ok": false,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "n08",
+      "type": "colloquial",
+      "question": "อยากดรอปเรียนทั้งเทอมต้องทำยังไง",
+      "pages": [
+        6,
+        9
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "หากต้องการดรอปเรียนทั้งเทอม ต้องยื่นคำร้องขอลาพักการศึกษาต่อคณบดี โดยทำหนังสือขออนุมัติลาพักการศึกษาภายในสิบห้าวันนับจากวันเปิดภาคการศึกษา และต้องชำระค่าธรรมเนียมเพื่อขึ้นทะเบียนเป็นนิสิต/เพื่อรักษาสภาพนิสิต [S2]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          9,
+          6,
+          6,
+          9,
+          6
+        ],
+        "retrieval_ms": 51,
+        "llm_ms": 2372,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n09",
+      "type": "colloquial",
+      "question": "อยากย้ายคณะต้องเรียนมาก่อนกี่เทอม",
+      "pages": [
+        9
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ต้องได้เรียนตามแผนการศึกษาในคณะเดิมมาแล้วไม่น้อยกว่าสองภาคการศึกษาปกติ [S1][S3]",
+        "cited_pages": [
+          9,
+          9
+        ],
+        "cited_correct": 2,
+        "sent_pages": [
+          9,
+          10,
+          9,
+          2,
+          2
+        ],
+        "retrieval_ms": 36,
+        "llm_ms": 1141,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n10",
+      "type": "number_words",
+      "question": "เทอมนี้ไม่ลงทะเบียน ต้องจ่ายค่ารักษาสภาพภายในกี่วัน",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ต้องชำระค่าธรรมเนียมเพื่อรักษาสภาพนิสิตภายในสิบห้าวัน นับจากวันเปิดภาคการศึกษา [S1]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          5,
+          6,
+          6,
+          6
+        ],
+        "retrieval_ms": 27,
+        "llm_ms": 1176,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n11",
+      "type": "number_words",
+      "question": "พ้นสภาพแล้วขอกลับเข้าเรียนได้ภายในกี่ปี",
+      "pages": [
+        6
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตที่พ้นสภาพการเป็นนิสิตสามารถขอกลับเข้าเป็นนิสิตใหม่ได้ หากพ้นกำหนดเวลาไม่เกินสองปี นับจากวันที่นิสิตผู้นั้นพ้นสภาพการเป็นนิสิต [S2]",
+        "cited_pages": [
+          6
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          6,
+          6,
+          2,
+          10,
+          10
+        ],
+        "retrieval_ms": 53,
+        "llm_ms": 1762,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n12",
+      "type": "direct",
+      "question": "หลักสูตร 4 ปี เรียนได้นานสุดกี่ปี",
+      "pages": [
+        5,
+        10
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "หลักสูตรปริญญาตรี (4 ปี) ใช้เวลาศึกษาไม่เกิน 8 ปีการศึกษาสำหรับการลงทะเบียนเรียนเต็มเวลา และไม่เกิน 12 ปีการศึกษาสำหรับการลงทะเบียนเรียนไม่เต็มเวลา [S2]",
+        "cited_pages": [
+          5
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          5,
+          5,
+          5,
+          10,
+          1
+        ],
+        "retrieval_ms": 130,
+        "llm_ms": 1757,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n13",
+      "type": "table",
+      "question": "เกรด B+ ได้กี่แต้ม",
+      "pages": [
+        7
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "เกรด B+ ได้ 3.50 แต้ม [S1]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          7,
+          11,
+          11,
+          5,
+          8
+        ],
+        "retrieval_ms": 50,
+        "llm_ms": 846,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n14",
+      "type": "table",
+      "question": "ได้ W หมายความว่าอะไร",
+      "pages": [
+        7,
+        8
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ได้ W หมายความว่า นิสิตได้ถอนรายวิชาที่ลงทะเบียนไว้ [S2]",
+        "cited_pages": [
+          7
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          8,
+          7,
+          8,
+          8,
+          7
+        ],
+        "retrieval_ms": 51,
+        "llm_ms": 990,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n15",
+      "type": "condition",
+      "question": "เกรดเฉลี่ย 3.30 ได้เกียรตินิยมอันดับไหน",
+      "pages": [
+        11
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตที่มีค่าระดับขั้นสะสมเฉลี่ยตลอดหลักสูตรตั้งแต่ 3.25 ถึง 3.49 จะได้รับเกียรตินิยมอันดับสอง [S1]",
+        "cited_pages": [
+          11
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          11,
+          11,
+          10,
+          4,
+          1
+        ],
+        "retrieval_ms": 59,
+        "llm_ms": 1737,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n16",
+      "type": "condition",
+      "question": "เกรดเฉลี่ย 3.60 แต่เคยลงเรียนซ้ำ ได้เกียรตินิยมไหม",
+      "pages": [
+        11
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "ไม่สามารถได้รับเกียรตินิยมได้ เนื่องจากมีข้อกำหนดว่าต้องไม่เคยลงทะเบียนเรียนซ้ำในรายวิชาใด [S1]",
+        "cited_pages": [
+          11
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          11,
+          10,
+          2,
+          11,
+          1
+        ],
+        "retrieval_ms": 51,
+        "llm_ms": 1371,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n17",
+      "type": "condition",
+      "question": "เข้าเรียนปี 2558 ใช้ข้อบังคับนี้ไหม",
+      "pages": [
+        1,
+        11
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตที่เข้าศึกษาตั้งแต่ปีการศึกษา 2559 เป็นต้นไป จึงใช้ข้อบังคับนี้ [S2] ส่วนนิสิตที่เข้าศึกษาในปี 2558 ใช้ข้อบังคับเดิม คือ ข้อบังคับ พ.ศ. 2549 ที่ถูกยกเลิก [S2][S3]",
+        "cited_pages": [
+          1,
+          1
+        ],
+        "cited_correct": 2,
+        "sent_pages": [
+          11,
+          1,
+          1,
+          1,
+          2
+        ],
+        "retrieval_ms": 149,
+        "llm_ms": 2636,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n18",
+      "type": "condition",
+      "question": "เรียนปีสุดท้ายแล้วได้รางวัลเรียนดีประจำปีไหม",
+      "pages": [
+        11
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": true,
+        "answer": "นิสิตปีสุดท้ายของหลักสูตรไม่อยู่ในข่ายของสิทธิได้รับรางวัลเรียนดีประจำปี [S1]",
+        "cited_pages": [
+          11
+        ],
+        "cited_correct": 1,
+        "sent_pages": [
+          11,
+          11,
+          10,
+          2,
+          7
+        ],
+        "retrieval_ms": 52,
+        "llm_ms": 1483,
+        "citation_fixes": 0,
+        "facts_ok": true,
+        "citation_hit": true,
+        "correct": true
+      }
+    },
+    {
+      "id": "n19",
+      "type": "partial",
+      "question": "ลงทะเบียนช้าโดนปรับกี่บาท",
+      "pages": [
+        5
+      ],
+      "search_rank": 1,
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          5,
+          6,
+          6,
+          6,
+          8
+        ],
+        "retrieval_ms": 146,
+        "llm_ms": 830,
+        "citation_fixes": 0,
+        "facts_ok": false,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "n20",
+      "type": "partial",
+      "question": "ต้องได้ TOEIC กี่คะแนนถึงจบ",
+      "pages": [
+        10
+      ],
+      "search_rank": 3,
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          7,
+          4,
+          10,
+          5,
+          5
+        ],
+        "retrieval_ms": 61,
+        "llm_ms": 772,
+        "citation_fixes": 0,
+        "facts_ok": false,
+        "citation_hit": false,
+        "correct": false
+      }
+    },
+    {
+      "id": "n21",
+      "type": "unanswerable",
+      "question": "มหาวิทยาลัยมีหอพักให้ไหม",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          11,
+          2,
+          3,
+          6,
+          3
+        ],
+        "retrieval_ms": 53,
+        "llm_ms": 731,
+        "citation_fixes": 0,
+        "correct": true
+      }
+    },
+    {
+      "id": "n22",
+      "type": "unanswerable",
+      "question": "อธิการบดีชื่ออะไร",
+      "pages": [],
+      "chat": {
+        "found": false,
+        "answer": "ไม่พบข้อมูลนี้ในเอกสาร",
+        "cited_pages": [],
+        "cited_correct": 0,
+        "sent_pages": [
+          11,
+          4
+        ],
+        "retrieval_ms": 152,
+        "llm_ms": 694,
+        "citation_fixes": 0,
+        "correct": true
+      }
+    }
+  ]
+}

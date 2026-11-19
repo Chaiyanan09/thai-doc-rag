@@ -1,0 +1,28 @@
+{
+  "document": "sample-docs/ข้อบังคับมหาวิทยาลัยนเรศวร ว่าด้วย การศึกษาระดับปริญญาตรี พ.ศ. 2559.pdf",
+  "notes": "เอกสารจริง (ข้อบังคับ ม.นเรศวร 2559, 11 หน้า). pages = หน้าที่มีคำตอบ (ว่าง = เอกสารไม่มีคำตอบ). must_include = คำที่คำตอบต้องมีทุกตัว ใช้ | คั่นคำที่ใช้แทนกันได้. must_not_include = ถ้าคำตอบมีคำเหล่านี้ถือว่าแต่งข้อมูล. type: direct, colloquial, number_words = เอกสารเขียนตัวเลขเป็นคำ, table, condition, partial = เอกสารบอกแค่บางส่วน (เช่น ตามประกาศมหาวิทยาลัย) ต้องตอบส่วนที่มีโดยไม่แต่งตัวเลข, unanswerable",
+  "questions": [
+    {"id": "n01", "type": "direct", "question": "ภาคปกติลงทะเบียนได้กี่หน่วยกิต", "pages": [6], "must_include": ["9", "22"]},
+    {"id": "n02", "type": "direct", "question": "ภาคฤดูร้อนลงได้สูงสุดกี่หน่วยกิต", "pages": [6], "must_include": ["9"]},
+    {"id": "n03", "type": "direct", "question": "ถอนรายวิชาได้ถึงสัปดาห์ไหน", "pages": [7], "must_include": ["12"]},
+    {"id": "n04", "type": "direct", "question": "ต้องเข้าเรียนกี่เปอร์เซ็นต์ถึงมีสิทธิ์สอบ", "pages": [7], "must_include": ["80"]},
+    {"id": "n05", "type": "colloquial", "question": "เกรดเฉลี่ยเท่าไหร่ถึงโดนรีไทร์", "pages": [4, 10], "must_include": ["1.50|1.5", "2.00|2.0"]},
+    {"id": "n06", "type": "colloquial", "question": "ติด I ต้องแก้ภายในเมื่อไหร่", "pages": [8], "must_include": ["4สัปดาห์|สี่สัปดาห์"]},
+    {"id": "n07", "type": "colloquial", "question": "ได้ D ลงเรียนใหม่ได้ไหม", "pages": [8], "must_include": ["C"]},
+    {"id": "n08", "type": "colloquial", "question": "อยากดรอปเรียนทั้งเทอมต้องทำยังไง", "pages": [6, 9], "must_include": ["ลาพัก", "อาจารย์ที่ปรึกษา|คณบดี|ผู้ปกครอง"]},
+    {"id": "n09", "type": "colloquial", "question": "อยากย้ายคณะต้องเรียนมาก่อนกี่เทอม", "pages": [9], "must_include": ["2ภาค|สองภาค"]},
+    {"id": "n10", "type": "number_words", "question": "เทอมนี้ไม่ลงทะเบียน ต้องจ่ายค่ารักษาสภาพภายในกี่วัน", "pages": [6], "must_include": ["15|สิบห้า"]},
+    {"id": "n11", "type": "number_words", "question": "พ้นสภาพแล้วขอกลับเข้าเรียนได้ภายในกี่ปี", "pages": [6], "must_include": ["2ปี|สองปี"]},
+    {"id": "n12", "type": "direct", "question": "หลักสูตร 4 ปี เรียนได้นานสุดกี่ปี", "pages": [5, 10], "must_include": ["8"]},
+    {"id": "n13", "type": "table", "question": "เกรด B+ ได้กี่แต้ม", "pages": [7], "must_include": ["3.50|3.5"]},
+    {"id": "n14", "type": "table", "question": "ได้ W หมายความว่าอะไร", "pages": [7, 8], "must_include": ["ถอน"]},
+    {"id": "n15", "type": "condition", "question": "เกรดเฉลี่ย 3.30 ได้เกียรตินิยมอันดับไหน", "pages": [11], "must_include": ["อันดับสอง|อันดับ2"]},
+    {"id": "n16", "type": "condition", "question": "เกรดเฉลี่ย 3.60 แต่เคยลงเรียนซ้ำ ได้เกียรตินิยมไหม", "pages": [11], "must_include": ["ไม่ได้|ไม่สามารถ|ไม่มีสิทธิ"]},
+    {"id": "n17", "type": "condition", "question": "เข้าเรียนปี 2558 ใช้ข้อบังคับนี้ไหม", "pages": [1, 11], "must_include": ["2559|เดิม"]},
+    {"id": "n18", "type": "condition", "question": "เรียนปีสุดท้ายแล้วได้รางวัลเรียนดีประจำปีไหม", "pages": [11], "must_include": ["ไม่ได้|ไม่อยู่ในข่าย|ไม่มีสิทธิ"]},
+    {"id": "n19", "type": "partial", "question": "ลงทะเบียนช้าโดนปรับกี่บาท", "pages": [5], "must_include": ["ประกาศ"], "must_not_include": ["100"]},
+    {"id": "n20", "type": "partial", "question": "ต้องได้ TOEIC กี่คะแนนถึงจบ", "pages": [10], "must_include": ["ภาษาอังกฤษ"]},
+    {"id": "n21", "type": "unanswerable", "question": "มหาวิทยาลัยมีหอพักให้ไหม", "pages": [], "must_include": []},
+    {"id": "n22", "type": "unanswerable", "question": "อธิการบดีชื่ออะไร", "pages": [], "must_include": [], "must_not_include": ["กระแส"]}
+  ]
+}

@@ -76,6 +76,12 @@ def facts_ok(answer: str, must_include: list[str]) -> bool:
     return all(any(normalize(alt) in a for alt in item.split("|")) for item in must_include)
 
 
+def invented(answer: str, must_not_include: list[str]) -> list[str]:
+    """คำต้องห้ามที่โผล่ในคำตอบ เช่น ตัวเลขที่เอกสารไม่ได้ระบุ (มี = AI แต่งข้อมูล)"""
+    a = normalize(answer)
+    return [item for item in must_not_include if normalize(item) in a]
+
+
 def search_rank(results: list[dict], pages: list[int]) -> int | None:
     """อันดับแรก (เริ่มที่ 1) ที่ผลการค้นมาจากหน้าที่ถูก"""
     for i, hit in enumerate(results, start=1):
@@ -99,12 +105,15 @@ def score_chat(reply: dict, q: dict) -> dict:
         "llm_ms": reply["llmMs"],
         "citation_fixes": reply.get("citationFixes", 0),
     }
+    bad = invented(reply["answer"], q.get("must_not_include", []))
+    if bad:
+        result["invented"] = bad
     if answerable:
         result["facts_ok"] = facts_ok(reply["answer"], q["must_include"])
         result["citation_hit"] = cited_correct > 0
-        result["correct"] = reply["found"] and result["facts_ok"] and result["citation_hit"]
+        result["correct"] = reply["found"] and result["facts_ok"] and result["citation_hit"] and not bad
     else:
-        result["correct"] = not reply["found"]
+        result["correct"] = not reply["found"] and not bad
     return result
 
 
@@ -139,6 +148,7 @@ def summarize(rows: list[dict]) -> dict:
         s["refused_correctly"] = pct(sum(1 for c in una if not c["found"]), len(una))
         s["avg_llm_ms"] = round(sum(r["chat"]["llm_ms"] for r in chats) / len(chats))
         s["citation_fixed_answers"] = sum(1 for r in chats if r["chat"].get("citation_fixes", 0) > 0)
+        s["invented_answers"] = sum(1 for r in chats if r["chat"].get("invented"))
         s["errors"] = sum(1 for r in rows if r.get("chat") and "error" in r["chat"])
 
         by_type = {}
@@ -163,6 +173,7 @@ METRIC_LABELS = [
     ("refused_correctly", "ข้อที่ไม่มีคำตอบ: ตอบว่าไม่พบ (%)"),
     ("avg_llm_ms", "เวลา LLM เฉลี่ย (ms)"),
     ("citation_fixed_answers", "คำตอบที่ระบบแก้เลขอ้างอิงให้ (ข้อ)"),
+    ("invented_answers", "คำตอบที่มีข้อมูลต้องห้าม/แต่งขึ้น (ข้อ)"),
     ("errors", "เรียก API ไม่สำเร็จ (ข้อ)"),
 ]
 
@@ -196,7 +207,9 @@ def to_markdown(run: dict) -> str:
         lines += ["", "## ข้อที่ผิด", ""]
         for r in wrong:
             c = r["chat"]
-            lines += [f"**{r['id']} {r['question']}** (หน้าที่ถูก {r['pages'] or 'ไม่มี'})", "",
+            note = f" แต่งข้อมูล: {', '.join(c['invented'])}" if c.get("invented") else ""
+            cited = f" อ้างอิงหน้า {c['cited_pages']}" if c.get("cited_pages") else ""
+            lines += [f"**{r['id']} {r['question']}** (หน้าที่ถูก {r['pages'] or 'ไม่มี'}{cited}){note}", "",
                       f"> {c.get('answer', c.get('error'))}", ""]
     return "\n".join(lines) + "\n"
 
