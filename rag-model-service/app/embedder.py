@@ -9,6 +9,7 @@ from . import config
 class Embedder(Protocol):
     model_name: str
     dim: int
+    device: str
 
     def embed(self, texts: list[str]) -> list[list[float]]: ...
 
@@ -22,6 +23,7 @@ class SentenceTransformerEmbedder:
         self.batch_size = batch_size
         self.model = SentenceTransformer(model_name, device=device)
         self.dim = self.model.get_embedding_dimension()
+        self.device = str(self.model.device)  # เช่น "cuda:0" หรือ "cpu"
 
     def embed(self, texts: list[str]) -> list[list[float]]:
         vectors = self.model.encode(

@@ -25,7 +25,7 @@ async def lifespan(_: FastAPI):
     if config.PRELOAD_MODEL:
         log.info("Loading embedding model %s (first run downloads it) ...", config.EMBED_MODEL)
         embedder = get_embedder()
-        log.info("Embedding model ready: dim=%s", embedder.dim)
+        log.info("Embedding model ready: dim=%s device=%s", embedder.dim, embedder.device)
     yield
 
 
@@ -39,7 +39,8 @@ def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
 
 @app.get("/health", response_model=HealthResponse)
 def health() -> HealthResponse:
-    return HealthResponse(status="ok", model=config.EMBED_MODEL, model_loaded=is_loaded())
+    device = get_embedder().device if is_loaded() else None
+    return HealthResponse(status="ok", model=config.EMBED_MODEL, model_loaded=is_loaded(), device=device)
 
 
 # ใช้ def ธรรมดา (ไม่ใช่ async def) เพราะงานกิน CPU, FastAPI จะรันใน thread pool ให้เอง
