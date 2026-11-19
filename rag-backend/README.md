@@ -9,7 +9,7 @@ Backend หลักของระบบ (Spring Boot 4.1 + Java 21 + Spring AI
 | `GET /api/documents` | รายการเอกสารทั้งหมด (ใหม่สุดก่อน) |
 | `GET /api/documents/{id}` | ข้อมูลเอกสาร 1 ไฟล์ |
 | `DELETE /api/documents/{id}` | ลบเอกสาร (chunk ถูกลบตามด้วย ON DELETE CASCADE) |
-| `GET /api/search?q=...&limit=5` | ค้น chunk ที่ความหมายใกล้คำถามที่สุด |
+| `GET /api/search?q=...&limit=5` | ค้น chunk ที่ความหมายใกล้คำถามที่สุด เพิ่ม `&documentIds=<uuid>` (ใส่ซ้ำได้) เพื่อค้นเฉพาะบางไฟล์ |
 | `GET /api/chat/settings` | ค่าที่ใช้ตอบอยู่ (model, top-k, min-score, รูปแบบการส่ง chunk) ให้ eval บันทึกคู่กับผล |
 | `POST /api/chat` | body `{"question": "..."}` ได้คำตอบที่มีรหัสอ้างอิง `[S1]` พร้อม chunk ที่ใช้ (`sources`) และ `found=false` ถ้าเอกสารไม่มีคำตอบ เพิ่ม `"documentIds": ["<uuid>", ...]` (ไม่เกิน 20) เพื่อค้นเฉพาะไฟล์ที่แนบในแชท ถ้าไม่ส่งค้นทุกเอกสาร |
 
