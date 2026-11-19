@@ -28,7 +28,7 @@ Next.js (3001) ──> Spring Boot (8081) ──> Python FastAPI (8001)   อ่
    docker compose ps           # รอจน STATUS เป็น healthy
    ```
 2. **Model service**: ทำตาม `rag-model-service/README.md` (สร้าง venv, `pip install`, คัดลอก `.env`)
-3. **Backend**: เปิด `rag-backend` ใน IntelliJ, คัดลอก `.env.example` เป็น `.env` แล้วใส่รหัสผ่านเดียวกับข้อ 1
+3. **Backend**: เปิด `rag-backend` ใน IntelliJ, คัดลอก `.env.example` เป็น `.env` แล้วใส่รหัสผ่านเดียวกับข้อ 1 และ `TYPHOON_API_KEY` (สมัครฟรีที่ https://playground.opentyphoon.ai)
 4. **Frontend**: `npm install` และคัดลอก `.env.example` เป็น `.env.local`
 
 ## รันทุกวัน
@@ -38,11 +38,11 @@ Next.js (3001) ──> Spring Boot (8081) ──> Python FastAPI (8001)   อ่
 3. backend: กด Run ใน IntelliJ
 4. frontend: `npm run dev` แล้วเปิด http://localhost:3001
 
-## ลองใช้ (สัปดาห์ 1)
+## ลองใช้
 
 1. แถบสถานะบนหน้าเว็บต้องเป็นสีเขียวครบ 3 ตัว
 2. อัปโหลด `sample-docs/sample-regulation-th.pdf` (หรือ PDF ภาษาไทยที่เป็นข้อความ ไม่ใช่สแกน)
-3. ลองคำถามจาก `sample-docs/test-questions.md` ในช่องทดสอบค้นหา ดูว่าผลอันดับแรกมาจากหน้าที่ถูกไหม
+3. ไปที่หน้าแชท ถามคำถามจาก `sample-docs/test-questions.md` คำตอบควรมีเลขอ้างอิงที่ชี้ไปหน้าที่ถูก และข้อ "หอพัก" ต้องตอบว่าไม่พบ
 
 ## ดูข้อมูลในฐานข้อมูล
 
@@ -64,7 +64,7 @@ SELECT page_number, left(content, 80) FROM chunks ORDER BY id LIMIT 5;
 
 ## แผน
 
-- สัปดาห์ 1: นำเข้าเอกสาร + ค้นหาด้วย vector ✅ (โค้ดชุดนี้)
+- สัปดาห์ 1: นำเข้าเอกสาร + ค้นหาด้วย vector ✅
 - สัปดาห์ 2: หน้าแชท + Spring AI ให้ LLM (Typhoon) ตอบพร้อมอ้างอิงหน้า
 - สัปดาห์ 3: ชุดคำถามทดสอบ 50 ข้อ + hybrid search (vector + keyword)
 - สัปดาห์ 4: ล็อกอิน (Spring Security + JWT), Docker Compose ครบทุก service, deploy
